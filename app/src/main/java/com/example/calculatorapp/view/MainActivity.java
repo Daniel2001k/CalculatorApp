@@ -1,10 +1,12 @@
-package com.example.calculatorapp;
+package com.example.calculatorapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.calculatorapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

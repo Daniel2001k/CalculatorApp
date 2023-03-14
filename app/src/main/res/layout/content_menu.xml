@@ -21,8 +21,10 @@
 
     <SurfaceView
         android:id="@+id/surfaceView"
-        android:layout_width="258dp"
-        android:layout_height="374dp"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="134dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_fragment_content_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
