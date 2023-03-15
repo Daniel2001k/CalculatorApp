@@ -14,10 +14,14 @@
         android:theme="@style/Theme.CalculatorApp"
         tools:targetApi="31" >
         <activity
+            android:parentActivityName=".view.menuActivity"
             android:name=".view.CalculatorActivity"
+            android:label="@string/menu_calculator"
             android:exported="false" />
         <activity
+            android:parentActivityName=".view.menuActivity"
             android:name=".view.HistoryActivity"
+            android:label="@string/menu_history"
             android:exported="false" />
         <activity
             android:name=".view.menuActivity"
