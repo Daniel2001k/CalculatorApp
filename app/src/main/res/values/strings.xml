@@ -14,4 +14,23 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_calculator">Calculator</string>
     <string name="menu_history">History</string>
+    <string name="calculatorCharacterc">C</string>
+    <string name="calculatorCharacterOpenBracket">(</string>
+    <string name="calculatorCharacterCloseBracket">)</string>
+    <string name="calculatorCharacterDivide">/</string>
+    <string name="calculatorCharacter7">7</string>
+    <string name="calculatorCharacter8">8</string>
+    <string name="calculatorCharacter9">9</string>
+    <string name="calculatorCharacter4">4</string>
+    <string name="calculatorCharacter5">5</string>
+    <string name="calculatorCharacter6">6</string>
+    <string name="calculatorCharacter1">1</string>
+    <string name="calculatorCharacter2">2</string>
+    <string name="calculatorCharacter3">3</string>
+    <string name="calculatorCharacter0">0</string>
+    <string name="calculatorCharacterDecimalPoint">.</string>
+    <string name="calculatorCharacterEqual">=</string>
+    <string name="calculatorCharacterAdd">+</string>
+    <string name="calculatorCharacterSubtract">-</string>
+    <string name="calculatorCharacterMultiply">*</string>
 </resources>

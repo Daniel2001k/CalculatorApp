@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.CalculatorActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="0"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:inputType="none"
+        android:enabled="false"
+        android:focusable="false" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:rowCount="5" >
+
+        <Button android:id="@+id/buttonClear" android:text="@string/calculatorCharacterc" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonOpenBracket" android:text="@string/calculatorCharacterOpenBracket" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonCloseBracket" android:text="@string/calculatorCharacterCloseBracket" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonDivide" android:text="@string/calculatorCharacterDivide" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button7" android:text="@string/calculatorCharacter7" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button8" android:text="@string/calculatorCharacter8" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button9" android:text="@string/calculatorCharacter9" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonMultiply" android:text="@string/calculatorCharacterMultiply" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button4" android:text="@string/calculatorCharacter4" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button5" android:text="@string/calculatorCharacter5" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button6" android:text="@string/calculatorCharacter6" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonSubtract" android:text="@string/calculatorCharacterSubtract" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button1" android:text="@string/calculatorCharacter1" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button2" android:text="@string/calculatorCharacter2" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button3" android:text="@string/calculatorCharacter3" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonAdd" android:text="@string/calculatorCharacterAdd" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/button0" android:text="@string/calculatorCharacter0" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonDecimalPoint" android:text="@string/calculatorCharacterDecimalPoint" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+        <Button android:id="@+id/buttonEqual" android:text="@string/calculatorCharacterEqual" android:textSize="24sp" android:layout_columnWeight="1" android:layout_rowWeight="1" />
+
+
+        </GridLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

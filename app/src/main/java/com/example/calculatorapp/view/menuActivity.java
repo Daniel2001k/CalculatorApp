@@ -1,13 +1,19 @@
 package com.example.calculatorapp.view;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.calculatorapp.R;
 import com.example.calculatorapp.controller.CameraPreview;
+import com.example.calculatorapp.controller.DbContextSqlLite;
+import com.example.calculatorapp.model.MathOperation;
+import com.example.calculatorapp.model.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -19,6 +25,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calculatorapp.databinding.ActivityMenuBinding;
+
+import java.util.List;
 
 public class menuActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -52,10 +60,29 @@ public class menuActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+
         /*mPreview = new CameraPreview(this);
 
         FrameLayout previewLayout = findViewById(R.id.camera_preview);
         previewLayout.addView(mPreview);*/
+
+        DbContextSqlLite dbContextSqlLite = new DbContextSqlLite(this);
+        SQLiteDatabase db = dbContextSqlLite.getWritableDatabase();
+
+        User user = dbContextSqlLite.getUser();
+        if (user != null) {
+            NavigationView nav = findViewById(R.id.nav_view);
+            View headerView = nav.getHeaderView(0);
+
+            TextView pName = headerView.findViewById(R.id.profileName);
+            TextView pEmail = headerView.findViewById(R.id.profileEmail);
+
+            pName.setText(user.getName());
+            pEmail.setText(user.getEmail());
+        }
+
+        db.close();
     }
 
     @Override
@@ -79,6 +106,11 @@ public class menuActivity extends AppCompatActivity {
 
     public void goToCalculatorActivity(MenuItem item) {
         Intent intent = new Intent(menuActivity.this, CalculatorActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToSettingsActivity(MenuItem item) {
+        Intent intent = new Intent(menuActivity.this, SettingsActivity.class);
         startActivity(intent);
     }
 }

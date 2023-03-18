@@ -1,10 +1,5 @@
 package com.example.calculatorapp.controller;
 
-import static com.example.calculatorapp.model.MathOperation.TABLE_NAME;
-import static com.example.calculatorapp.model.MathOperation.COLUMN_ID;
-import static com.example.calculatorapp.model.MathOperation.COLUMN_OPERATION;
-import static com.example.calculatorapp.model.MathOperation.COLUMN_INSERTED_DATE;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,13 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.calculatorapp.model.MathOperation;
+import com.example.calculatorapp.model.User;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DbContextSqlLite extends SQLiteOpenHelper {
@@ -30,10 +21,15 @@ public class DbContextSqlLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_OPERATION + " TEXT, " +
-                COLUMN_INSERTED_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + MathOperation.TABLE_NAME +
+                " (" + MathOperation.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                MathOperation.COLUMN_OPERATION + " TEXT, " +
+                MathOperation.COLUMN_INSERTED_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + User.TABLE_NAME + "(" +
+                User.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                User.COLUMN_NAME + " TEXT, " +
+                User.COLUMN_EMAIL + " TEXT);");
     }
 
     @Override
@@ -44,10 +40,10 @@ public class DbContextSqlLite extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_OPERATION, mathOperation.getOperation());
-        values.put(COLUMN_INSERTED_DATE, mathOperation.getInsertedDate().toString());
+        values.put(MathOperation.COLUMN_OPERATION, mathOperation.getOperation());
+        values.put(MathOperation.COLUMN_INSERTED_DATE, mathOperation.getInsertedDate());
 
-        db.insert(TABLE_NAME, null, values);
+        db.insert(MathOperation.TABLE_NAME, null, values);
         db.close();
     }
 
@@ -55,23 +51,14 @@ public class DbContextSqlLite extends SQLiteOpenHelper {
         List<MathOperation> operationsList = new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + MathOperation.TABLE_NAME, null);
 
         if (cursor.moveToFirst()) {
             do {
-                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-                @SuppressLint("Range") String operation = cursor.getString(cursor.getColumnIndex(COLUMN_OPERATION));
-                @SuppressLint("Range") String insertedDateStr = cursor.getString(cursor.getColumnIndex(COLUMN_INSERTED_DATE));
+                @SuppressLint("Range") String operation = cursor.getString(cursor.getColumnIndex(MathOperation.COLUMN_OPERATION));
+                @SuppressLint("Range") String insertedDateStr = cursor.getString(cursor.getColumnIndex(MathOperation.COLUMN_INSERTED_DATE));
 
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date insertedDate = null;
-                try {
-                    insertedDate = sdf.parse(insertedDateStr);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                MathOperation op = new MathOperation(id, operation, insertedDate);
+                MathOperation op = new MathOperation(operation, insertedDateStr);
                 operationsList.add(op);
             } while (cursor.moveToNext());
         }
@@ -82,34 +69,34 @@ public class DbContextSqlLite extends SQLiteOpenHelper {
         return operationsList;
     }
 
-    public MathOperation getDataById(int id) {
-        SQLiteDatabase db = getReadableDatabase();
+    public User getUser() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + User.TABLE_NAME + " ORDER BY " + User.COLUMN_ID + " DESC LIMIT 1";
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-        String[] columns = {COLUMN_ID, COLUMN_OPERATION, COLUMN_INSERTED_DATE};
-        String selection = COLUMN_ID + "=?";
-        String[] selectionArgs = {String.valueOf(id)};
+        if (cursor != null)
+            cursor.moveToFirst();
 
-        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(User.COLUMN_NAME));
+        @SuppressLint("Range") String email = cursor.getString(cursor.getColumnIndex(User.COLUMN_EMAIL));
 
-        MathOperation op = null;
-        if (cursor.moveToFirst()) {
-            @SuppressLint("Range") String operation = cursor.getString(cursor.getColumnIndex(COLUMN_OPERATION));
-            @SuppressLint("Range") String insertedDateStr = cursor.getString(cursor.getColumnIndex(COLUMN_INSERTED_DATE));
-
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date insertedDate = null;
-            try {
-                insertedDate = sdf.parse(insertedDateStr);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            op = new MathOperation(id, operation, insertedDate);
-        }
+        User user = new User(name, email);
 
         cursor.close();
         db.close();
+        return user;
+    }
 
-        return op;
+    public void addUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(User.TABLE_NAME, null, null);
+
+        ContentValues values = new ContentValues();
+        values.put(User.COLUMN_NAME, user.getName());
+        values.put(User.COLUMN_EMAIL, user.getEmail());
+
+        db.insert(User.TABLE_NAME, null, values);
+        db.close();
     }
 }
